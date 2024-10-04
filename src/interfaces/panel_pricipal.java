@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package interfaces;
-
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  *
  * @author HP
@@ -27,21 +30,123 @@ public class panel_pricipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel2 = new javax.swing.JLabel();
+        diagrama_uml = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("GENERADOR DE CODIGO");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 340, 60));
+
+        diagrama_uml.setForeground(new java.awt.Color(255, 255, 255));
+        diagrama_uml.setText("DIAGRAMA");
+        getContentPane().add(diagrama_uml, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 310, 360));
+
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("CODIGO");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 300, 360));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo3.1.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 460));
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setText("Crear proyecto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Abrir proyecto");
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("Importar modelo");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        Nuevo_proyecto n = new Nuevo_proyecto();
+        n.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+           // TODO add your handling code here:
+           JFileChooser chooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes y Modelos StarUML", "jpg", "png", "gif", "bmp", "mdj");
+    chooser.setFileFilter(filter);
+    
+    int returnVal = chooser.showOpenDialog(this);
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+        File file = chooser.getSelectedFile();  // Obtener el archivo seleccionado
+        String filePath = file.getAbsolutePath();
+        
+        // Si el archivo es una imagen
+        if (filePath.endsWith(".jpg") || filePath.endsWith(".png") || filePath.endsWith(".gif") || filePath.endsWith(".bmp")) {
+            ImageIcon imageIcon = new ImageIcon(filePath);
+            diagrama_uml.setIcon(imageIcon);
+            diagrama_uml.setText("");  // Quitar el texto del JLabel si hay alguno
+            diagrama_uml.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Alinear la imagen
+        } 
+        // Si el archivo es un modelo StarUML
+        else if (filePath.endsWith(".mdj")) {
+            // Intentar buscar una imagen en los siguientes formatos (jpg, png, gif, bmp)
+            String[] imageExtensions = {".png", ".jpg", ".gif", ".bmp"};
+            boolean imageFound = false;
+
+            // Intentar con cada extensión de imagen
+            for (String ext : imageExtensions) {
+                String imagePath = filePath.replace(".mdj", ext); // Reemplazar la extensión .mdj con la de imagen
+                File imageFile = new File(imagePath);
+
+                if (imageFile.exists()) {
+                    // Mostrar la imagen exportada
+                    ImageIcon imageIcon = new ImageIcon(imagePath);
+                    diagrama_uml.setIcon(imageIcon);
+                    diagrama_uml.setText("");  // Quitar el texto del JLabel si hay alguno
+                    diagrama_uml.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Alinear la imagen
+                    imageFound = true;
+                    break; // Salir del bucle una vez encontrada la imagen
+                }
+            }
+
+            // Si no se encontró ninguna imagen
+            if (!imageFound) {
+                diagrama_uml.setText("Archivo StarUML seleccionado, pero no hay imagen para mostrar.");
+                diagrama_uml.setIcon(null);  // Eliminar cualquier imagen previa
+            }
+        }
+    }      
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +184,15 @@ public class panel_pricipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel diagrama_uml;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }
