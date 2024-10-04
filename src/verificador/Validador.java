@@ -4,6 +4,8 @@
  */
 package verificador;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.parsers.DocumentBuilder;//clase para convertir de xml a DOM
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -29,5 +31,20 @@ public class Validador {
             return false;
         }
         return true;
+    }
+    
+    public List<File> listarArchivos(String directorio) {
+        File folder = new File(directorio);
+        File[] archivos = folder.listFiles();
+
+        List<File> listaArchivos = new ArrayList<>();
+        if (archivos != null) {
+            for (File archivo : archivos) {
+                if (esExtensionValida(archivo) && esFormatoValido(archivo)) {
+                    listaArchivos.add(archivo);
+                }
+            }
+        }
+        return listaArchivos;
     }
 }
