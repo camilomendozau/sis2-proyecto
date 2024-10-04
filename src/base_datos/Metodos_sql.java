@@ -88,7 +88,7 @@ public class Metodos_sql {
             }
         }
 
-        System.out.println("¿Puede iniciar sesión? " + iniciarSesion);
+        
         return iniciarSesion;
     }
 }

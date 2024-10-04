@@ -36,7 +36,7 @@ public class inicio_login extends javax.swing.JFrame {
         contratext = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
-        btnInicio = new javax.swing.JButton();
+        btninicio = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -76,13 +76,13 @@ public class inicio_login extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 100, -1));
 
-        btnInicio.setText("INICIO");
-        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+        btninicio.setText("INICIO");
+        btninicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInicioActionPerformed(evt);
+                btninicioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
+        getContentPane().add(btninicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
 
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +90,7 @@ public class inicio_login extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 80, 20));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 240, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/fondo.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 340));
@@ -109,10 +109,11 @@ public class inicio_login extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-       String usua = usuariotext.getText();
-       String contra = contratext.getText().toString();
-    
+    private void btninicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninicioActionPerformed
+        // TODO add your handling code here:
+        String usua = usuariotext.getText();
+        String contra = contratext.getText().toString();
+
         if (usua.isEmpty() || contra.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Favor de ingresar el nombre de usuario y contraseña", "AVISO!", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -125,13 +126,13 @@ public class inicio_login extends javax.swing.JFrame {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso", "Bienvenido", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             panel_pricipal p = new panel_pricipal();
-            p.setVisible(true); 
+            p.setVisible(true);
             this.dispose();
         } else {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "ERROR!", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnInicioActionPerformed
+    }//GEN-LAST:event_btninicioActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
@@ -174,9 +175,9 @@ public class inicio_login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btninicio;
     private javax.swing.JPasswordField contratext;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -186,7 +186,7 @@ public class Registro extends javax.swing.JFrame {
 
             // Ejecutamos la inserción en la base de datos
             stmt.executeUpdate();
-            System.out.println("Los valores han sido agregados a la base de datos.");
+            //System.out.println("Los valores han sido agregados a la base de datos.");
 
             // Cerramos la conexión
             stmt.close();
