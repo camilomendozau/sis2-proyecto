@@ -48,7 +48,7 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, 30));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 255, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("NOMBRE PROYECTO");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 30));
 
@@ -71,14 +71,14 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
                 nombreProyecto_txtActionPerformed(evt);
             }
         });
-        getContentPane().add(nombreProyecto_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 260, 20));
+        getContentPane().add(nombreProyecto_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 260, 30));
 
         directorio_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 directorio_txtActionPerformed(evt);
             }
         });
-        getContentPane().add(directorio_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 260, -1));
+        getContentPane().add(directorio_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 260, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo2.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 340));
@@ -118,6 +118,9 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
                     if (success) {
                     JOptionPane.showMessageDialog(null, "Carpeta '" + nombre + "' creada con éxito en " + fileID,
                             "CARPETA", JOptionPane.INFORMATION_MESSAGE);
+                    panel_pricipal p = new panel_pricipal();
+                    p.setVisible(true);
+                    this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "ERROR: No se pudo crear la carpeta '" + nombre + "'",
                             "CARPETA", JOptionPane.ERROR_MESSAGE);
@@ -127,7 +130,7 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
                         "CARPETA", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }              
+        } 
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void directorio_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directorio_txtActionPerformed
