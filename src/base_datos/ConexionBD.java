@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class ConexionBD {
     // Datos de conexión
-    private static String url = "jdbc:mysql://localhost:3306/base_crear";
+    private static String url = "jdbc:mysql://localhost:3306/proyecto_sisinf2";
     private static String usuario = "root";
     private static String contrasena = "";
 
