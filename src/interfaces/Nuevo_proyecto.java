@@ -9,18 +9,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import interfaces.panel_pricipal;
 /**
  *
  * @author HP
  */
 public class Nuevo_proyecto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Nuevo_proyecto
-     */
+    String Nombre;
     public Nuevo_proyecto() {
         initComponents();
         this.setLocationRelativeTo(null);
+        String Nombre = "";
     }
 
     /**
@@ -89,12 +89,12 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         // TODO add your handling code here:
-        String nombre = "";
+        
         String direc = "";
         JFileChooser chooser;
         String fileID;
         
-        nombre = nombreProyecto_txt.getText();
+        Nombre = nombreProyecto_txt.getText();
         direc = directorio_txt.getText();
         
         if (evt.getSource() == btnCrear) {
@@ -110,30 +110,32 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
                 directorio_txt.setText(fileID); // Mostrar la ruta seleccionada en el JTextField
 
                 // Concatenar el nombre del proyecto con la ruta seleccionada
-                File folder = new File(fileID + "\\" + nombre);
+                File folder = new File(fileID + "\\" + Nombre);
 
                 // Verificar si la carpeta existe y crearla si no
                 if (!folder.exists()) {
                     boolean success = folder.mkdirs(); // Crear directorios necesarios
 
                     if (success) {
-                    JOptionPane.showMessageDialog(null, "Carpeta '" + nombre + "' creada con éxito en " + fileID,
+                    JOptionPane.showMessageDialog(null, "Carpeta '" + Nombre + "' creada con éxito en " + fileID,
                             "CARPETA", JOptionPane.INFORMATION_MESSAGE);
                     panel_pricipal p = new panel_pricipal();
                     p.setVisible(true);
                     this.dispose();
+                    p.actualizarNombreProyecto(Nombre);
                     } else {
-                        JOptionPane.showMessageDialog(null, "ERROR: No se pudo crear la carpeta '" + nombre + "'",
+                        JOptionPane.showMessageDialog(null, "ERROR: No se pudo crear la carpeta '" + Nombre + "'",
                             "CARPETA", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
-                JOptionPane.showMessageDialog(null, "ERROR: La carpeta '" + nombre + "' ya existe en " + fileID,
+                JOptionPane.showMessageDialog(null, "ERROR: La carpeta '" + Nombre + "' ya existe en " + fileID,
                         "CARPETA", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } 
     }//GEN-LAST:event_btnCrearActionPerformed
 
+   
     private void directorio_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_directorio_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_directorio_txtActionPerformed
