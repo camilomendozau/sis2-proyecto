@@ -20,6 +20,7 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
      */
     public Nuevo_proyecto() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

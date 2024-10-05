@@ -19,6 +19,7 @@ public class panel_pricipal extends javax.swing.JFrame {
      */
     public panel_pricipal() {
         initComponents();
+        
     }
 
     /**

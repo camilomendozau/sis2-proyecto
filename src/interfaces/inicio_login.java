@@ -37,6 +37,7 @@ public class inicio_login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         btninicio = new javax.swing.JButton();
+        btnInvitado = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -83,6 +84,14 @@ public class inicio_login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btninicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
+
+        btnInvitado.setText("MODO INVITADO");
+        btnInvitado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInvitadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnInvitado, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, -1, -1));
 
         btnSalir.setText("SALIR");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -139,6 +148,13 @@ public class inicio_login extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnInvitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvitadoActionPerformed
+        // TODO add your handling code here:
+        panel_invitado i = new panel_invitado();
+        i.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnInvitadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -175,6 +191,7 @@ public class inicio_login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnInvitado;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btninicio;
