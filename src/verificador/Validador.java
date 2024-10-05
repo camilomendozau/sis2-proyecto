@@ -15,11 +15,11 @@ import org.w3c.dom.Document;
  */
 public class Validador {
     
-    protected boolean esExtensionValida(File diagrama) {
+    public boolean esExtensionValida(File diagrama) {
         String nombre_archivo = diagrama.getName().toLowerCase();
         return nombre_archivo.endsWith(".xmi");
     }
-    protected boolean esFormatoValido(File diagrama){
+    public boolean esFormatoValido(File diagrama){
         try {
             DocumentBuilderFactory instancia = DocumentBuilderFactory.newInstance();
             DocumentBuilder constructor = instancia.newDocumentBuilder();

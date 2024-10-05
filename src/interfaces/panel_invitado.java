@@ -5,6 +5,11 @@
  */
 package interfaces;
 
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import metodos_uml.uml_metodos;
+
 /**
  *
  * @author USER
@@ -19,6 +24,7 @@ public class panel_invitado extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("MODO INVITADO");
     }
+    private File imagenGenerada;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,70 +36,116 @@ public class panel_invitado extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        Jimagen = new javax.swing.JLabel();
+        btnlimpiar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        item_salir = new javax.swing.JMenu();
+        ite_subirArch = new javax.swing.JMenuItem();
+        item_eleminar = new javax.swing.JMenuItem();
+        itm_cerrar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton2.setText("GENERAR CODIGO");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 390, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Diagrama visor");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        Jimagen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        getContentPane().add(Jimagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 430, 320));
+
+        btnlimpiar.setText("LIMPIAR");
+        btnlimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlimpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/fondo4.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 440));
 
-        jMenu1.setText("ARCHIVO");
+        item_salir.setText("ARCHIVO");
 
-        jMenuItem1.setText("SUBIR ARCHIVO");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        ite_subirArch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        ite_subirArch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/itmesubir.png"))); // NOI18N
+        ite_subirArch.setText("SUBIR ARCHIVO");
+        ite_subirArch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                ite_subirArchActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        item_salir.add(ite_subirArch);
 
-        jMenuItem2.setText("ELIMINAR");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        item_eleminar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
+        item_eleminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Iitemeliminar.png"))); // NOI18N
+        item_eleminar.setText("ELIMINAR");
+        item_eleminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                item_eleminarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        item_salir.add(item_eleminar);
 
-        jMenuItem3.setText("SALIR");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        itm_cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/itemcrerrar.png"))); // NOI18N
+        itm_cerrar.setText("CERRAR");
+        itm_cerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                itm_cerrarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        item_salir.add(itm_cerrar);
 
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(item_salir);
 
         setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void ite_subirArchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ite_subirArchActionPerformed
+        File archivoUML = uml_metodos.cargarArchivoUML(this);
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        if (archivoUML != null) {
+            try {
+                imagenGenerada = uml_metodos.convertirUMLAImagen(archivoUML);  // Usar la variable de instancia
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+                if (imagenGenerada != null) {
+                    uml_metodos.mostrarImagen(imagenGenerada, Jimagen);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo generar la imagen del diagrama.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al convertir el archivo UML a imagen: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_ite_subirArchActionPerformed
+
+    private void itm_cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itm_cerrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        inicio_login n = new inicio_login();
+        n.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itm_cerrarActionPerformed
+
+    private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
+        Jimagen.setIcon(null); 
+        Jimagen.revalidate();  
+        Jimagen.repaint();
+    }//GEN-LAST:event_btnlimpiarActionPerformed
+
+    private void item_eleminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_eleminarActionPerformed
+        // Seleccionar el archivo a eliminar 
+        File archivoParaEliminar = uml_metodos.seleccionarArchivoParaEliminar(this);
+        // Eliminar el archivo seleccionado
+        uml_metodos.eliminarArchivo(this, archivoParaEliminar, Jimagen);
+    }//GEN-LAST:event_item_eleminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -131,13 +183,15 @@ public class panel_invitado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Jimagen;
+    private javax.swing.JButton btnlimpiar;
+    private javax.swing.JMenuItem ite_subirArch;
+    private javax.swing.JMenuItem item_eleminar;
+    private javax.swing.JMenu item_salir;
+    private javax.swing.JMenuItem itm_cerrar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }
