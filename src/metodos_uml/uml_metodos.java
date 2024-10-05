@@ -43,39 +43,42 @@ public class uml_metodos {
     }
 
     public static File convertirUMLAImagen(File umlFile) throws IOException {
-        // comentarior para ver hasta doden avanza la conversion
-         //System.out.println("Iniciando la conversión de UML a imagen...");
-         //crea una nuevo file .png
-         File outputFile = new File(umlFile.getAbsolutePath() + ".png");
+        // Crear un nuevo archivo .png
+        File outputFile = new File(umlFile.getAbsolutePath() + ".png");
+        // Usamos la librería PlantUML para convertir el archivo UML a PNG
+        SourceFileReader reader = new SourceFileReader(umlFile);
+        List<GeneratedImage> images = reader.getGeneratedImages();
+        // Verificar si hay imágenes generadas
+        if (images.isEmpty()) {
+            System.out.println("No se generaron imágenes.");
+            return null; // No hay imágenes generadas
+        }
+        // Suponiendo que hay al menos una imagen generada
+        GeneratedImage image = images.get(0); // Primera imagen generada
+        File pngFile = image.getPngFile(); // Archivo PNG generado
+        // Copiar el archivo PNG al destino usando FileInputStream y FileOutputStream
+        try (FileInputStream fis = new FileInputStream(pngFile);
+             FileOutputStream fos = new FileOutputStream(outputFile)) {
+            byte[] buffer = new byte[1024]; // Tamaño del buffer
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, length); 
+            }
+        } catch (IOException e) {
+            System.err.println("Error al copiar el archivo: " + e.getMessage());
+            return null; 
+        }
 
-         // usamos la librera PlantUML para convertir el archivo UML a PNG
-         SourceFileReader reader = new SourceFileReader(umlFile);
-         List<GeneratedImage> images = reader.getGeneratedImages();
+        // Eliminar el archivo temporal generado por PlantUML
+        if (pngFile.exists()) {
+            if (pngFile.delete()) {
+                System.out.println("Archivo temporal eliminado: " + pngFile.getAbsolutePath());
+            } else {
+                System.err.println("No se pudo eliminar el archivo temporal: " + pngFile.getAbsolutePath());
+            }
+        }
 
-         // Verificar si hay imagenes generadas
-         if (images.isEmpty()) {
-             System.out.println("No se generaron imágenes.");
-             return null; // no hay imágenes generadas
-         }
-         // Se supone que hay al menos una imagen generada
-         GeneratedImage image = images.get(0); // primera imagen generada
-         File pngFile = image.getPngFile(); // Archivo PNG generado
-         // Copiar el archivo PNG al destino usando FileInputStream y FileOutputStream
-         try (FileInputStream fis = new FileInputStream(pngFile);
-              FileOutputStream fos = new FileOutputStream(outputFile)) {
-
-             byte[] buffer = new byte[1024]; // Tamaño del buffer
-             int length;
-             while ((length = fis.read(buffer)) > 0) {
-                 fos.write(buffer, 0, length); // 
-             }
-         } catch (IOException e) {
-             System.err.println("Error al copiar el archivo: " + e.getMessage());
-             return null; 
-         }
-
-         //System.out.println("Imagen generada y copiada: " + outputFile.getAbsolutePath());
-         return outputFile; 
+        return outputFile; 
     }
 
     public static void mostrarImagen(File imageFile, JLabel labelImagen) {
