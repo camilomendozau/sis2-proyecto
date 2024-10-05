@@ -8,6 +8,17 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import metodos_uml.uml_metodos;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import java.awt.Image;
+import java.io.IOException;
+import interfaces.ResizableImagePanel;
+import java.awt.Dimension;
 /**
  *
  * @author HP
@@ -16,10 +27,14 @@ public class panel_pricipal extends javax.swing.JFrame {
 
     /**
      * Creates new form panel_pricipal
-     */
+     */ 
+    ResizableImagePanel panelDiagramaR;
     public panel_pricipal() {
         initComponents();
-        
+        panelDiagramaR = new ResizableImagePanel(""); // Aquí se carga tu imagen UML
+        panelDiagramaR.setPreferredSize(new Dimension(300, 300)); // Tamaño inicial
+        getContentPane().add(panelDiagramaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 280, 360)); // Ajusta la posición y tamaño inicial
+        //panelDiagrama.add(panelDiagramaR);
     }
 
     /**
@@ -32,8 +47,10 @@ public class panel_pricipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        diagrama_uml = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
+        panelCodigo = new javax.swing.JPanel();
+        panelDiagrama = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -48,19 +65,28 @@ public class panel_pricipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("GENERADOR DE CODIGO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 340, 60));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 350, 50));
 
-        diagrama_uml.setForeground(new java.awt.Color(255, 255, 255));
-        diagrama_uml.setText("DIAGRAMA");
-        getContentPane().add(diagrama_uml, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 310, 360));
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("NombreProyecto");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Diagramas");
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Codigos");
+        treeNode1.add(treeNode2);
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTree1ValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTree1);
 
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("CODIGO");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 300, 360));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 130, 360));
+        getContentPane().add(panelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 270, 360));
+        getContentPane().add(panelDiagrama, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 390, 450));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo3.1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 460));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 530));
 
         jMenu1.setText("File");
 
@@ -98,57 +124,57 @@ public class panel_pricipal extends javax.swing.JFrame {
         Nuevo_proyecto n = new Nuevo_proyecto();
         n.setVisible(true);
         this.dispose();
+        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
            // TODO add your handling code here:
-           JFileChooser chooser = new JFileChooser();
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("Imágenes y Modelos StarUML", "jpg", "png", "gif", "bmp", "mdj");
-    chooser.setFileFilter(filter);
-    
-    int returnVal = chooser.showOpenDialog(this);
-    if (returnVal == JFileChooser.APPROVE_OPTION) {
-        File file = chooser.getSelectedFile();  // Obtener el archivo seleccionado
-        String filePath = file.getAbsolutePath();
-        
-        // Si el archivo es una imagen
-        if (filePath.endsWith(".jpg") || filePath.endsWith(".png") || filePath.endsWith(".gif") || filePath.endsWith(".bmp")) {
-            ImageIcon imageIcon = new ImageIcon(filePath);
-            diagrama_uml.setIcon(imageIcon);
-            diagrama_uml.setText("");  // Quitar el texto del JLabel si hay alguno
-            diagrama_uml.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Alinear la imagen
-        } 
-        // Si el archivo es un modelo StarUML
-        else if (filePath.endsWith(".mdj")) {
-            // Intentar buscar una imagen en los siguientes formatos (jpg, png, gif, bmp)
-            String[] imageExtensions = {".png", ".jpg", ".gif", ".bmp"};
-            boolean imageFound = false;
-
-            // Intentar con cada extensión de imagen
-            for (String ext : imageExtensions) {
-                String imagePath = filePath.replace(".mdj", ext); // Reemplazar la extensión .mdj con la de imagen
-                File imageFile = new File(imagePath);
-
-                if (imageFile.exists()) {
-                    // Mostrar la imagen exportada
-                    ImageIcon imageIcon = new ImageIcon(imagePath);
-                    diagrama_uml.setIcon(imageIcon);
-                    diagrama_uml.setText("");  // Quitar el texto del JLabel si hay alguno
-                    diagrama_uml.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Alinear la imagen
-                    imageFound = true;
-                    break; // Salir del bucle una vez encontrada la imagen
+            try {
+            // Cargar el archivo UML seleccionado
+                File umlFile = uml_metodos.cargarArchivoUML(this); // Usamos la clase que contiene los métodos
+                if (umlFile != null) {
+                // Convertir el archivo UML a una imagen
+                    File imageFile = uml_metodos.convertirUMLAImagen(umlFile);
+                    if (imageFile != null) {
+                    // Mostrar la imagen en el panel de diagramas
+                    uml_metodos.mostrarImagenEnPanel(imageFile, panelDiagramaR);
+                    panelDiagrama.removeAll();
+                    panelDiagrama.add(panelDiagramaR);
+                    panelDiagrama.revalidate();
+                    panelDiagrama.repaint();
+                    // Agregar el archivo UML al JTree bajo el nodo "Diagramas"
+                    agregarArchivoUML(umlFile.getName());
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se pudo generar la imagen del archivo UML.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
+            } catch (IOException ex) {
+                 JOptionPane.showMessageDialog(this, "Ocurrió un error al procesar el archivo UML: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-            // Si no se encontró ninguna imagen
-            if (!imageFound) {
-                diagrama_uml.setText("Archivo StarUML seleccionado, pero no hay imagen para mostrar.");
-                diagrama_uml.setIcon(null);  // Eliminar cualquier imagen previa
-            }
-        }
-    }      
+            
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    
+    private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTree1ValueChanged
+    // Método para actualizar el nombre del proyecto en el JTree
+    public void actualizarNombreProyecto(String nombreProyecto) {
+        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        root.setUserObject(nombreProyecto);
+        model.nodeChanged(root);
+    }
+    
+    private void agregarArchivoUML(String nombreArchivo) {
+        DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+        DefaultMutableTreeNode diagramasNode = (DefaultMutableTreeNode) root.getChildAt(0); // Nodo "Diagramas"
+        
+        // Agregar el archivo UML como nuevo nodo
+        diagramasNode.add(new DefaultMutableTreeNode(nombreArchivo));
+        model.nodeStructureChanged(diagramasNode);
+    }
     /**
      * @param args the command line arguments
      */
@@ -185,15 +211,17 @@ public class panel_pricipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel diagrama_uml;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree jTree1;
+    private javax.swing.JPanel panelCodigo;
+    private javax.swing.JPanel panelDiagrama;
     // End of variables declaration//GEN-END:variables
 }
