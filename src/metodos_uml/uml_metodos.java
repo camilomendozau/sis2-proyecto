@@ -96,6 +96,29 @@ public class uml_metodos {
         labelImagen.revalidate();  // Refresca el JLabel para mostrar la imagen
         labelImagen.repaint(); 
     }
+    public static void mostrarImagenEnPanel(File imageFile, JPanel panelDiagrama) {
+        // Crear un ImageIcon a partir del archivo
+        ImageIcon originalImage = new ImageIcon(imageFile.getAbsolutePath());
+
+        // Escalar la imagen al tamaño del JPanel
+        Image scaledImage = originalImage.getImage().getScaledInstance(panelDiagrama.getWidth(), panelDiagrama.getHeight(), Image.SCALE_SMOOTH);
+
+        // Crear un nuevo ImageIcon a partir de la imagen escalada
+        ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
+
+        // Crear un JLabel que contenga la imagen
+        JLabel labelImagen = new JLabel(scaledImageIcon);
+
+        // Eliminar cualquier componente previo en el panel
+        panelDiagrama.removeAll();
+
+        // Añadir el JLabel al panel
+        panelDiagrama.add(labelImagen);
+
+        // Actualizar el panel para mostrar la nueva imagen
+        panelDiagrama.revalidate();
+        panelDiagrama.repaint();
+    }
     
     public static boolean eliminarArchivoGenerado(File imagenGenerada, JLabel labelImagen) {
         if (imagenGenerada != null && imagenGenerada.exists()) {
