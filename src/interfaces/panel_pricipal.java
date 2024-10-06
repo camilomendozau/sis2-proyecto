@@ -29,6 +29,8 @@ public class panel_pricipal extends javax.swing.JFrame {
      * Creates new form panel_pricipal
      */ 
     ResizableImagePanel panelDiagramaR;
+    private File umlFile;
+    
     public panel_pricipal() {
         initComponents();
         panelDiagramaR = new ResizableImagePanel(""); // Aquí se carga tu imagen UML
@@ -36,6 +38,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         getContentPane().add(panelDiagramaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 280, 360)); // Ajusta la posición y tamaño inicial
         //panelDiagrama.add(panelDiagramaR);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
