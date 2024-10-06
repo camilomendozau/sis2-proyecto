@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import net.sourceforge.plantuml.GeneratedImage;
 import verificador.verificador_corregido;
+import java.nio.file.Files;
 
 public class uml_metodos {
     
@@ -163,6 +164,35 @@ public class uml_metodos {
             JOptionPane.showMessageDialog(parentFrame, "No se seleccionó ningún archivo.", "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
+    public static void identificarTipoDeDiagrama(JFrame parentFrame,File umlFile) throws IOException {
+        // Leer el contenido del archivo UML
+        List<String> lineasUML = Files.readAllLines(umlFile.toPath());
+        
+        // Criterios para identificar tipos de diagramas
+        boolean esClase = lineasUML.stream().anyMatch(linea -> linea.contains("class"));
+        boolean esSecuencia = lineasUML.stream().anyMatch(linea -> linea.contains("participant"));
+        boolean esActividad = lineasUML.stream().anyMatch(linea -> linea.contains("activity"));
+        boolean esCasosDeUso = lineasUML.stream().anyMatch(linea -> linea.contains("usecase") || linea.contains("actor"));
+        boolean esEstado = lineasUML.stream().anyMatch(linea -> linea.contains("state") || linea.contains("initial") || linea.contains("final"));
+        boolean esPaquete = lineasUML.stream().anyMatch(linea -> linea.contains("package"));
+        
+        // Identificar el tipo de diagrama basado en las líneas analizadas
+        if (esClase) {
+            JOptionPane.showMessageDialog(parentFrame, "El tipo del diagrama es: DIAGRAMA DE CLASES", "Identificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            } else if (esSecuencia) {
+                JOptionPane.showMessageDialog(parentFrame, "El tipo del diagrama es: DIAGRAMA DE SECUENCIA", "Identificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            } else if (esActividad) {
+                JOptionPane.showMessageDialog(parentFrame, "El tipo del diagrama es: DIAGRAMA DE ACTIVIDADES", "Identificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            } else if(esCasosDeUso){
+                JOptionPane.showMessageDialog(parentFrame, "El tipo del diagrama es: DIAGRAMA DE CASOS DE USO", "Identificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            }else if(esPaquete){
+                JOptionPane.showMessageDialog(parentFrame, "El tipo del diagrama es: DIAGRAMA DE PAQUETES", "Identificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            }else if(esEstado){
+                JOptionPane.showMessageDialog(parentFrame, "El tipo del diagrama es: DIAGRAMA DE ESTADOS", "Identificacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            }else {
+                JOptionPane.showMessageDialog(parentFrame, "No se puede indentificar el diagrama.", "Error", JOptionPane.WARNING_MESSAGE);
+            }
+         }
 }
 
 
