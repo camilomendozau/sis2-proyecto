@@ -111,18 +111,31 @@ public class panel_invitado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ite_subirArchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ite_subirArchActionPerformed
+        // Abrimos el archivo UML que subió el usuario
         File archivoUML = uml_metodos.cargarArchivoUML(this);
 
         if (archivoUML != null) {
             try {
-                imagenGenerada = uml_metodos.convertirUMLAImagen(archivoUML);  // Usar la variable de instancia
+                // Convertimos el archivo a imagen pa ver una vista previa
+                imagenGenerada = uml_metodos.convertirUMLAImagen(archivoUML); 
 
+                // Si la imagen se generó bien, la mostramos
                 if (imagenGenerada != null) {
-                    uml_metodos.mostrarImagen(imagenGenerada, Jimagen);
+                    int opcion = uml_metodos.mostrarVistaPrevia(archivoUML, imagenGenerada, this);
+
+                    // Si el usuario dice que sí, mostramos la imagen en el JLabel
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        uml_metodos.mostrarImagen(imagenGenerada, Jimagen); // Mostramos la imagen en el JLabel
+                    } else {
+                        // Si dijo que no, pues no hacemos nada
+                        JOptionPane.showMessageDialog(this, "La imagen no fue seleccionada para mostrar.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
+                    // Error si no se pudo generar la imagen
                     JOptionPane.showMessageDialog(this, "No se pudo generar la imagen del diagrama.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (IOException e) {
+                // Error si algo falló al convertir el archivo a imagen
                 JOptionPane.showMessageDialog(this, "Error al convertir el archivo UML a imagen: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

@@ -4,15 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Metodos_sql {
     
     private Connection conexion;
     private PreparedStatement sentenciaPreparada;
     private ResultSet resultado;
+   
     
     public boolean buscarUsuarioRepetidoBD(String usuario) {
         boolean usuarioRepetido = false;
@@ -91,4 +89,7 @@ public class Metodos_sql {
         
         return iniciarSesion;
     }
+    
+     
+
 }

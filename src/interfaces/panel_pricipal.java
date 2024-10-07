@@ -83,7 +83,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTree1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 130, 360));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 370));
         getContentPane().add(panelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 270, 360));
         getContentPane().add(panelDiagrama, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 390, 450));
 
@@ -157,30 +157,43 @@ public class panel_pricipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-           // TODO add your handling code here:
-            try {
-            // Cargar el archivo UML seleccionado
-                umlFile = uml_metodos.cargarArchivoUML(this); // Usamos la clase que contiene los métodos
-                if (umlFile != null) {
-                // Convertir el archivo UML a una imagen
-                    File imageFile = uml_metodos.convertirUMLAImagen(umlFile);
-                    if (imageFile != null) {
-                    // Mostrar la imagen en el panel de diagramas
-                    uml_metodos.mostrarImagenEnPanel(imageFile, panelDiagramaR);
-                    panelDiagrama.removeAll();
-                    panelDiagrama.add(panelDiagramaR);
-                    panelDiagrama.revalidate();
-                    panelDiagrama.repaint();
-                    // Agregar el archivo UML al JTree bajo el nodo "Diagramas"
-                    agregarArchivoUML(umlFile.getName());
+        try {
+            // Abrimos el archivo UML que el usuario eligió
+            umlFile = uml_metodos.cargarArchivoUML(this); 
+
+            if (umlFile != null) {
+                // Convertimos el UML a una imagen para darle una checadita
+                File imageFile = uml_metodos.convertirUMLAImagen(umlFile);
+
+                if (imageFile != null) {
+                    // Mostramos la vista previa y si le da "Sí", seguimos adelante
+                    int opcion = uml_metodos.mostrarVistaPrevia(umlFile, imageFile, this);
+
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        // Si le gustó la vista previa, pues la ponemos en el panel
+                        uml_metodos.mostrarImagenEnPanel(imageFile, panelDiagramaR);
+
+                        // Limpiamos el panel viejo y le metemos el nuevo con la imagen
+                        panelDiagrama.removeAll();
+                        panelDiagrama.add(panelDiagramaR);
+                        panelDiagrama.revalidate();
+                        panelDiagrama.repaint();
+
+                        // Metemos el archivo UML al árbol bajo el nodo "Diagramas"
+                        agregarArchivoUML(umlFile.getName());
                     } else {
-                        JOptionPane.showMessageDialog(this, "No se pudo generar la imagen del archivo UML.", "Error", JOptionPane.ERROR_MESSAGE);
+                        // Si dijo que no, pues nada
+                        JOptionPane.showMessageDialog(this, "La imagen no fue seleccionada para mostrar.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                     }
+                } else {
+                    // Si no se pudo hacer la imagen, mostramos el error
+                    JOptionPane.showMessageDialog(this, "No se pudo generar la imagen del archivo UML.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (IOException ex) {
-                 JOptionPane.showMessageDialog(this, "Ocurrió un error al procesar el archivo UML: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+        } catch (IOException ex) {
+            // Hubo un problema al procesar el archivo
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al procesar el archivo UML: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }       
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     

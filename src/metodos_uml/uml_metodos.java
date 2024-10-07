@@ -193,6 +193,34 @@ public class uml_metodos {
                 JOptionPane.showMessageDialog(parentFrame, "No se puede indentificar el diagrama.", "Error", JOptionPane.WARNING_MESSAGE);
             }
          }
+    public static int mostrarVistaPrevia(File archivoUML, File imagenGenerada, JFrame ventanaPrincipal) {
+        // creamos el icono de la imagen q generamos antes
+        ImageIcon imagenPreliminar = new ImageIcon(imagenGenerada.getAbsolutePath());
+
+        // la escalamos pa q no quede tan gigante
+        Image imagenEscalada = imagenPreliminar.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+        // etiqueta q va a mostrar la imagen escalada
+        JLabel etiquetaVistaPrevia = new JLabel(iconoEscalado);
+
+        // panel para poner la imagen y meterlo al dialogo
+        JPanel panelVistaPrevia = new JPanel();
+        panelVistaPrevia.add(etiquetaVistaPrevia);
+
+        // mostrar un dialogo con la vista previa y el archivo seleccionado
+        int opcion = JOptionPane.showConfirmDialog(
+            ventanaPrincipal,
+            panelVistaPrevia,
+            "Vista Previa del Diagrama UML: " + archivoUML.getName(),
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+        );
+
+        // devolvemos lo q el usuario elija (si o no)
+        return opcion;
+    }
+
 }
 
 

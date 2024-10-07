@@ -6,7 +6,6 @@
 package interfaces;
 
 import base_datos.Metodos_sql;
-import java.awt.BorderLayout;
 
 /**
  *
@@ -136,13 +135,16 @@ public class inicio_login extends javax.swing.JFrame {
         if (puedeIniciarSesion) {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso", "Bienvenido", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            
             panel_pricipal p = new panel_pricipal();
             p.setVisible(true);
+            
             this.dispose();
         } else {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "ERROR!", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_btninicioActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
