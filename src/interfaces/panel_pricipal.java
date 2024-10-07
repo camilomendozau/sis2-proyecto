@@ -12,8 +12,12 @@ import javax.swing.JOptionPane;
 import java.io.IOException;
 import interfaces.ResizableImagePanel;
 import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import verificador.RecuperarArchivo;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 /**
  *
  * @author HP
@@ -229,9 +233,34 @@ public class panel_pricipal extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         JFileChooser elegirCarpeta = new JFileChooser();
         elegirCarpeta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int resultado = elegirCarpeta.showOpenDialog(this);
-        File ruta = elegirCarpeta.getSelectedFile();
-        jTree1.setModel(cargarArbol.cargarModelo(ruta));
+        int resultado = elegirCarpeta.showOpenDialog(this);//elegimos la carpeta
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File ruta = elegirCarpeta.getSelectedFile();
+            jTree1.setModel(cargarArbol.cargarModelo(ruta));//cargamos el modelo del arbol
+            jTree1.addTreeSelectionListener(new TreeSelectionListener() {
+                @Override
+                public void valueChanged(TreeSelectionEvent e) {
+                    DefaultMutableTreeNode nodo_seleccionado = 
+                        (DefaultMutableTreeNode) jTree1.getLastSelectedPathComponent();
+                    
+                    if (nodo_seleccionado != null) {
+                        File archivo_seleccionado = new File(ruta, nodo_seleccionado.toString());
+                        
+                        if (archivo_seleccionado.isFile()) {
+                            try {
+                                uml_metodos.mostrarImagenEnPanel(uml_metodos.convertirUMLAImagen(archivo_seleccionado), panelDiagramaR);
+                                panelDiagrama.removeAll();
+                                panelDiagrama.add(panelDiagramaR);
+                                panelDiagrama.revalidate();
+                                panelDiagrama.repaint();
+                            } catch (IOException ex) {
+                                Logger.getLogger(panel_pricipal.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+            });
+        }    
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     // Método para actualizar el nombre del proyecto en el JTree
     public void actualizarNombreProyecto(String nombreProyecto) {
