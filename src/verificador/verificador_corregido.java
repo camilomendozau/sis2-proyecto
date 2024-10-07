@@ -8,10 +8,11 @@ import java.nio.file.Paths;
 public class verificador_corregido {
     // Método para validar la extensión del archivo
     public boolean esExtensionValida(File archivo) {
-        String nombreArchivo = archivo.getName().toLowerCase();;
+        String nombreArchivo = archivo.getName().toLowerCase();
         return nombreArchivo.endsWith(".mdj") || 
            nombreArchivo.endsWith(".xmi") || 
            nombreArchivo.endsWith(".uml") || 
+       nombreArchivo.endsWith(".txt") || 
            nombreArchivo.endsWith(".xml");
     }
 

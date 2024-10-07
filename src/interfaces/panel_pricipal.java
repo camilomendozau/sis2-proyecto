@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import java.io.IOException;
 import interfaces.ResizableImagePanel;
 import java.awt.Dimension;
+import javax.swing.JFileChooser;
+import verificador.RecuperarArchivo;
 /**
  *
  * @author HP
@@ -23,6 +25,7 @@ public class panel_pricipal extends javax.swing.JFrame {
      */ 
     ResizableImagePanel panelDiagramaR;
     private File umlFile;
+    RecuperarArchivo cargarArbol = new RecuperarArchivo();
     
     public panel_pricipal() {
         initComponents();
@@ -105,6 +108,11 @@ public class panel_pricipal extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 530));
 
         jMenu1.setText("File");
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
 
         jMenuItem1.setText("Crear proyecto");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +123,11 @@ public class panel_pricipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Abrir proyecto");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Importar modelo");
@@ -195,6 +208,18 @@ public class panel_pricipal extends javax.swing.JFrame {
         i.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JFileChooser elegirCarpeta = new JFileChooser();
+        elegirCarpeta.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int resultado = elegirCarpeta.showOpenDialog(this);
+        File ruta = elegirCarpeta.getSelectedFile();
+        jTree1.setModel(cargarArbol.cargarModelo(ruta));
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
     // Método para actualizar el nombre del proyecto en el JTree
     public void actualizarNombreProyecto(String nombreProyecto) {
         DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
