@@ -7,8 +7,6 @@ package interfaces;
 import java.io.File;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import interfaces.panel_pricipal;
 /**
  *
@@ -19,8 +17,9 @@ public class Nuevo_proyecto extends javax.swing.JFrame {
     String Nombre;
     public Nuevo_proyecto() {
         initComponents();
-        this.setLocationRelativeTo(null);
-        String Nombre = "";
+        this.setLocationRelativeTo(null);  // Centrar la ventana
+        this.setResizable(false);  // Evitar maximización
+        
     }
 
     /**

@@ -18,7 +18,6 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 
 
@@ -32,7 +31,8 @@ public class Registro extends javax.swing.JFrame {
     public Registro() {
         initComponents();
         this.setTitle("REGISTRO DE USUARIOS ");
-        this.setLocation(400, 220);
+        this.setLocationRelativeTo(null);  // Centrar la ventana
+        this.setResizable(false);  // Evitar maximización
     }
 
     

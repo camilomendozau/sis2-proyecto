@@ -21,8 +21,9 @@ public class panel_invitado extends javax.swing.JFrame {
      */
     public panel_invitado() {
         initComponents();
-        this.setLocationRelativeTo(null);
         this.setTitle("MODO INVITADO");
+        this.setLocationRelativeTo(null);  // Centrar la ventana
+        this.setResizable(false);  // Evitar maximización
     }
     private File imagenGenerada;
 

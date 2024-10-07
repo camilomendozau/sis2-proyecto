@@ -5,17 +5,10 @@
  */
 package interfaces;
 import java.io.File;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import metodos_uml.uml_metodos;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import java.awt.Image;
 import java.io.IOException;
 import interfaces.ResizableImagePanel;
 import java.awt.Dimension;
@@ -37,6 +30,8 @@ public class panel_pricipal extends javax.swing.JFrame {
         panelDiagramaR.setPreferredSize(new Dimension(300, 300)); // Tamaño inicial
         getContentPane().add(panelDiagramaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 280, 360)); // Ajusta la posición y tamaño inicial
         //panelDiagrama.add(panelDiagramaR);
+        this.setLocationRelativeTo(null);  // Centrar la ventana
+        this.setResizable(false);  // Evitar maximización
     }
     
 

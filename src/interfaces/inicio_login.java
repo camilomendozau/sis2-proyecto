@@ -6,6 +6,7 @@
 package interfaces;
 
 import base_datos.Metodos_sql;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -18,7 +19,8 @@ public class inicio_login extends javax.swing.JFrame {
      */
     public inicio_login() {
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);  // Centrar la ventana
+        this.setResizable(false);  // Evitar maximización
     }
 
     /**
