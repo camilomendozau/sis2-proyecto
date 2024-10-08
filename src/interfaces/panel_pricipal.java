@@ -191,9 +191,12 @@ public class panel_pricipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
         panelCodigo = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         panelDiagrama = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -227,6 +230,13 @@ public class panel_pricipal extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTree1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 370));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        panelCodigo.add(jScrollPane2);
+
         getContentPane().add(panelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 270, 360));
         getContentPane().add(panelDiagrama, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 390, 450));
 
@@ -245,6 +255,14 @@ public class panel_pricipal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 440, -1, -1));
+
+        jButton3.setText("GENERAR TXT");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo3.1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -500,6 +518,16 @@ public class panel_pricipal extends javax.swing.JFrame {
             panelDiagrama.repaint();
         }
     }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        jTextArea1.setText("Este es un ejemplo que se ve ya que no se genera codigo en este sprint");
+            
+            // Redibujar el panel para que refleje los cambios
+            panelCodigo.revalidate();
+            panelCodigo.repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
     // Método para actualizar el nombre del proyecto en el JTree
     public void actualizarNombreProyecto(String nombreProyecto) {
         DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
@@ -555,6 +583,7 @@ public class panel_pricipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -567,6 +596,8 @@ public class panel_pricipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTree jTree1;
     private javax.swing.JPanel panelCodigo;
     private javax.swing.JPanel panelDiagrama;
