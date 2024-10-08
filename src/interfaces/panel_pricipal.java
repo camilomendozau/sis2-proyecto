@@ -233,6 +233,8 @@ public class panel_pricipal extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setText("\n\n\n\n\n\n\n\n\n\n");
+        jTextArea1.setMargin(new java.awt.Insets(28, 28, 200, 6));
         jScrollPane2.setViewportView(jTextArea1);
 
         panelCodigo.add(jScrollPane2);
