@@ -11,10 +11,22 @@ import metodos_uml.uml_metodos;
 import javax.swing.JOptionPane;
 import java.io.IOException;
 import interfaces.ResizableImagePanel;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import verificador.RecuperarArchivo;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -40,7 +52,131 @@ public class panel_pricipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);  // Centrar la ventana
         this.setResizable(false);  // Evitar maximización
     }
-    
+    private void agregarPopupMenu() {
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem agregarComentario = new JMenuItem("Agregar Comentario");
+
+        agregarComentario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                Point mousePosition = panelDiagrama.getMousePosition();
+
+                String comentario = JOptionPane.showInputDialog("Escribe tu comentario:");
+
+                if (comentario != null && !comentario.isEmpty()) {
+
+                    JLabel comentarioLabel = new JLabel(comentario);
+
+                    // Definir la fuente personalizada
+                    Font font = new Font("MingLiu-ExtB", Font.BOLD, 14);
+                    comentarioLabel.setFont(font);
+
+                    comentarioLabel.setOpaque(false);  // Asegurarse que el fondo sea transparente
+
+                    comentarioLabel.setForeground(new Color(0, 0, 0));
+
+                    comentarioLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                    // Hacer que el comentario sea arrastrable
+                    hacerArrastrable(comentarioLabel);
+
+                    // Agregar un menú contextual para borrar el comentario
+                    agregarMenuBorrar(comentarioLabel);
+
+                    // Si no hay posición del mouse, colocar en el centro del panel
+                    if (mousePosition == null) {
+                        mousePosition = new Point(panelDiagrama.getWidth() / 2, panelDiagrama.getHeight() / 2);
+                    }
+
+                    // Ubicar el comentario en la posición del mouse
+                    comentarioLabel.setBounds(mousePosition.x, mousePosition.y, comentario.length() * 10, 30);
+
+                    // Agregar el comentario al panel
+                    panelDiagrama.add(comentarioLabel);
+                    panelDiagrama.repaint();
+                }
+            }
+        });
+
+        // Agregar el item "Agregar Comentario" al popup menu
+        popupMenu.add(agregarComentario);
+
+        panelDiagrama.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mostrarPopupMenu(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mostrarPopupMenu(e);
+            }
+
+            private void mostrarPopupMenu(MouseEvent e) {
+                if (e.isPopupTrigger()) {  // Detectar clic derecho
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
+    }
+
+    // Método para hacer que un JLabel sea arrastrable
+    private void hacerArrastrable(JLabel label) {
+        final Point[] puntoInicial = {null};
+
+        // Detectar cuando se presiona el mouse en el JLabel
+        label.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                puntoInicial[0] = e.getPoint(); // Guardar la posición inicial del clic
+            }
+        });
+
+        label.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent e) {
+
+                Point puntoLabel = label.getLocation();
+                int x = puntoLabel.x + e.getX() - puntoInicial[0].x;
+                int y = puntoLabel.y + e.getY() - puntoInicial[0].y;
+                label.setLocation(x, y); // Actualizar la posición del JLabel
+            }
+        });
+    }
+
+    private void agregarMenuBorrar(JLabel label) {
+        JPopupMenu popupMenu = new JPopupMenu();
+        JMenuItem borrarComentario = new JMenuItem("Borrar Comentario");
+
+        // Acción al seleccionar "Borrar Comentario"
+        borrarComentario.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                panelDiagrama.remove(label);  // Eliminar el comentario del panel
+                panelDiagrama.repaint();  // Refrescar el panel
+            }
+        });
+
+        // Agregar el item "Borrar Comentario" al popup menu
+        popupMenu.add(borrarComentario);
+
+        // Agregar mouse listener para detectar clic derecho en el comentario (label)
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mostrarPopupMenu(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mostrarPopupMenu(e);
+            }
+
+            private void mostrarPopupMenu(MouseEvent e) {
+                if (e.isPopupTrigger()) {  // Detectar clic derecho
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,6 +201,9 @@ public class panel_pricipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,7 +211,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("GENERADOR DE CODIGO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 350, 50));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 350, 50));
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("NombreProyecto");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Diagramas");
@@ -144,8 +283,37 @@ public class panel_pricipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Edit");
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/engranaje1.png"))); // NOI18N
+        jMenu2.setText("SELECCIONAR LENGUAJE");
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/java1.png"))); // NOI18N
+        jMenuItem4.setText("JAVA");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/java2.png"))); // NOI18N
+        jMenuItem5.setText("PYTHON");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/comem.png"))); // NOI18N
+        jMenu3.setText("AGREGAR COMENTARIOS");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -182,11 +350,9 @@ public class panel_pricipal extends javax.swing.JFrame {
                         panelDiagrama.add(panelDiagramaR);
                         panelDiagrama.revalidate();
                         panelDiagrama.repaint();
-
-                        // Metemos el archivo UML al árbol bajo el nodo "Diagramas"
+                        
                         agregarArchivoUML(umlFile.getName());
                     } else {
-                        // Si dijo que no, pues nada
                         JOptionPane.showMessageDialog(this, "La imagen no fue seleccionada para mostrar.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else {
@@ -245,7 +411,6 @@ public class panel_pricipal extends javax.swing.JFrame {
                     
                     if (nodo_seleccionado != null) {
                         File archivo_seleccionado = new File(ruta, nodo_seleccionado.toString());
-                        
                         if (archivo_seleccionado.isFile()) {
                             try {
                                 uml_metodos.mostrarImagenEnPanel(uml_metodos.convertirUMLAImagen(archivo_seleccionado), panelDiagramaR);
@@ -253,6 +418,8 @@ public class panel_pricipal extends javax.swing.JFrame {
                                 panelDiagrama.add(panelDiagramaR);
                                 panelDiagrama.revalidate();
                                 panelDiagrama.repaint();
+                                
+                                umlFile = archivo_seleccionado;
                             } catch (IOException ex) {
                                 Logger.getLogger(panel_pricipal.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -262,6 +429,77 @@ public class panel_pricipal extends javax.swing.JFrame {
             });
         }    
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas confirmar los cambios?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+
+            System.out.println("Cambios guardados.");
+        } else {
+
+            System.out.println("Acción cancelada.");
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas confirmar los cambios?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+
+            System.out.println("Cambios guardados.");
+        } else {
+
+            System.out.println("Acción cancelada.");
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        // TODO add your handling code here:
+         // Obtener posición del mouse para el comentario flotante
+        Point mousePosition = panelDiagrama.getMousePosition();
+
+// Solicitar el comentario
+        String comentario = JOptionPane.showInputDialog("Escribe tu comentario:");
+
+        if (comentario != null && !comentario.isEmpty()) {
+            // Crear un JLabel con el comentario y ubicarlo donde se hizo clic
+            JLabel comentarioLabel = new JLabel(comentario);
+
+            // Definir la fuente personalizada
+            Font font = new Font("MingLiu-ExtB", Font.BOLD, 14);
+            comentarioLabel.setFont(font);
+
+            // Configurar el fondo completamente transparente
+            comentarioLabel.setOpaque(false);  // Asegurarse que el fondo sea transparente
+
+            // Configurar el color del texto a cian
+            comentarioLabel.setForeground(new Color(0, 0, 0));
+
+            // Establecer un borde negro alrededor del comentario
+            comentarioLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+            // Hacer que el comentario sea arrastrable
+            hacerArrastrable(comentarioLabel);
+
+            // Agregar un menú contextual para borrar el comentario
+            agregarMenuBorrar(comentarioLabel);
+
+            // Si no hay posición del mouse, colocar en el centro del panel
+            if (mousePosition == null) {
+                mousePosition = new Point(panelDiagrama.getWidth() / 2, panelDiagrama.getHeight() / 2);
+            }
+
+            // Ubicar el comentario en la posición del mouse
+            comentarioLabel.setBounds(mousePosition.x, mousePosition.y, comentario.length() * 10, 30);
+
+            // Agregar el comentario al panel
+            panelDiagrama.add(comentarioLabel);
+            panelDiagrama.repaint();
+        }
+    }//GEN-LAST:event_jMenu3MouseClicked
     // Método para actualizar el nombre del proyecto en el JTree
     public void actualizarNombreProyecto(String nombreProyecto) {
         DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
@@ -321,10 +559,13 @@ public class panel_pricipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTree1;
     private javax.swing.JPanel panelCodigo;
