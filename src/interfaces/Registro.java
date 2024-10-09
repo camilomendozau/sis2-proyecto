@@ -50,6 +50,7 @@ public class Registro extends javax.swing.JFrame {
         nombretext = new javax.swing.JTextField();
         usuariotext = new javax.swing.JTextField();
         btnRegistro = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,6 +138,14 @@ public class Registro extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, -1, -1));
 
+        jButton1.setText("SALIR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
+
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo2.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 320));
@@ -217,8 +226,8 @@ public class Registro extends javax.swing.JFrame {
         // Obtenemos la letra que se escribió
         char c = evt.getKeyChar();
 
-        // Si no es una letra ni espacio, bloqueamos el ingreso
-        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && c != ' ') {
+        // Si no es una letra, espacio o la tecla de "retroceso", bloqueamos el ingreso
+        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && c != ' ' && c != '\b') {
             // No dejamos que se escriba el carácter
             evt.consume();
 
@@ -231,8 +240,8 @@ public class Registro extends javax.swing.JFrame {
         // Obtenemos la letra que se escribió
         char c = evt.getKeyChar();
 
-        // Si no es una letra ni espacio, bloqueamos el ingreso
-        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && c != ' ') {
+        // Si no es una letra, espacio o la tecla de "retroceso", bloqueamos el ingreso
+        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && c != ' ' && c != '\b') {
             // No dejamos que se escriba el carácter
             evt.consume();
 
@@ -248,6 +257,13 @@ public class Registro extends javax.swing.JFrame {
     private void contratextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contratextKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_contratextKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        inicio_login n = new inicio_login();
+        n.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,6 +304,7 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JTextField apellidotext;
     private javax.swing.JButton btnRegistro;
     private javax.swing.JTextField contratext;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
