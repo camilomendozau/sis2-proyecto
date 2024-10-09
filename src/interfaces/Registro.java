@@ -214,19 +214,31 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     private void nombretextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombretextKeyTyped
-        // TODO add your handling code here:
+        // Obtenemos la letra que se escribió
         char c = evt.getKeyChar();
-    
-        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && (c<' '|| c>' ')) evt.consume();
-        
+
+        // Si no es una letra ni espacio, bloqueamos el ingreso
+        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && c != ' ') {
+            // No dejamos que se escriba el carácter
+            evt.consume();
+
+            // Mostramos un mensaje diciendo que solo se pueden escribir letras y espacios
+            javax.swing.JOptionPane.showMessageDialog(this, "Solo se permiten letras y espacios", "Error de entrada", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_nombretextKeyTyped
 
     private void apellidotextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apellidotextKeyTyped
-        // TODO add your handling code here:
+        // Obtenemos la letra que se escribió
         char c = evt.getKeyChar();
-    
-        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && (c<' '|| c>' ')) evt.consume();
-        
+
+        // Si no es una letra ni espacio, bloqueamos el ingreso
+        if ((c<'a' || c>'z') && (c<'A' || c>'Z') && c != ' ') {
+            // No dejamos que se escriba el carácter
+            evt.consume();
+
+            // Mostramos un mensaje diciendo que solo se pueden escribir letras y espacios
+            javax.swing.JOptionPane.showMessageDialog(this, "Solo se permiten letras y espacios", "Error de entrada", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_apellidotextKeyTyped
 
     private void usuariotextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuariotextKeyTyped

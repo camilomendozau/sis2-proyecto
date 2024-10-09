@@ -40,6 +40,9 @@ public class panel_invitado extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Jimagen = new javax.swing.JLabel();
         btnlimpiar = new javax.swing.JButton();
+        panelCodigo = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         item_salir = new javax.swing.JMenu();
@@ -51,6 +54,11 @@ public class panel_invitado extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton2.setText("GENERAR CODIGO");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
@@ -68,6 +76,16 @@ public class panel_invitado extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, -1, -1));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("\n\n\n\n\n\n\n\n\n\n");
+        jTextArea1.setMargin(new java.awt.Insets(28, 28, 200, 6));
+        jScrollPane2.setViewportView(jTextArea1);
+
+        panelCodigo.add(jScrollPane2);
+
+        getContentPane().add(panelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 60, 260, 310));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/fondo4.jpg"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 440));
@@ -161,6 +179,15 @@ public class panel_invitado extends javax.swing.JFrame {
         uml_metodos.eliminarArchivo(this, archivoParaEliminar, Jimagen);
     }//GEN-LAST:event_item_eleminarActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jTextArea1.setText("Este es un ejemplo que se ve ya que no se genera codigo en este sprint");
+            
+        // Redibujar el panel para que refleje los cambios
+        panelCodigo.revalidate();
+        panelCodigo.repaint();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,5 +234,8 @@ public class panel_invitado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel panelCodigo;
     // End of variables declaration//GEN-END:variables
 }

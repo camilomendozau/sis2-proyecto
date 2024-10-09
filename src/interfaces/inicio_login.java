@@ -122,7 +122,9 @@ public class inicio_login extends javax.swing.JFrame {
     private void btninicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninicioActionPerformed
         // TODO add your handling code here:
         String usua = usuariotext.getText();
-        String contra = contratext.getText().toString();
+        char[] passwordArray = contratext.getPassword();
+        String contra = new String(passwordArray);
+
 
         if (usua.isEmpty() || contra.isEmpty()) {
             javax.swing.JOptionPane.showMessageDialog(this, "Favor de ingresar el nombre de usuario y contraseña", "AVISO!", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -154,6 +156,7 @@ public class inicio_login extends javax.swing.JFrame {
 
     private void btnInvitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvitadoActionPerformed
         // TODO add your handling code here:
+        javax.swing.JOptionPane.showMessageDialog(this, "Ingresando a modo invitado", "Modo Invitado", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         panel_invitado i = new panel_invitado();
         i.setVisible(true);
         this.dispose();
