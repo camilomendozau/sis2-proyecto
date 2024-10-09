@@ -20,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -27,6 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.Timer;
 import verificador.RecuperarArchivo;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
@@ -43,14 +46,57 @@ public class panel_pricipal extends javax.swing.JFrame {
     private File umlFile;
     RecuperarArchivo cargarArbol = new RecuperarArchivo();
     
+   private Timer autoSaveTimer;
+
     public panel_pricipal() {
         initComponents();
+        agregarPopupMenu();
+        
+        notificationLabel = new JLabel("Autoguardado realizado", JLabel.RIGHT);
+        notificationLabel.setForeground(Color.WHITE);
+        notificationLabel.setVisible(false);
+
+        // Ajustar el tamaño y la posición de la etiqueta de notificación
+        notificationLabel.setBounds(5, 5, 150, 30); // Cambia las coordenadas según lo necesites
+        //add(notificationLabel); // Añadir la etiqueta al JFrame
+
         panelDiagramaR = new ResizableImagePanel(""); // Aquí se carga tu imagen UML
         panelDiagramaR.setPreferredSize(new Dimension(300, 300)); // Tamaño inicial
         getContentPane().add(panelDiagramaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 280, 360)); // Ajusta la posición y tamaño inicial
         //panelDiagrama.add(panelDiagramaR);
         this.setLocationRelativeTo(null);  // Centrar la ventana
         this.setResizable(false);  // Evitar maximización
+
+        // Timer para el autoguardado cada 10 minutos (600000 milisegundos)
+        autoSaveTimer = new Timer(10000, e -> autoSave());
+        autoSaveTimer.start(); // Iniciar el timer
+
+        setVisible(true); // Mostrar la ventana
+    }
+
+    private void autoSave() {
+        try {
+            // Ruta del archivo donde se guardará el texto
+            File file = new File("autoguardado.txt");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write(jTextArea1.getText());
+                showNotification("Autoguardado realizado");
+            }
+            System.out.println("Autoguardado realizado en: " + file.getAbsolutePath()); // Mensaje en la terminal
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showNotification(String message) {
+        notificationLabel.setText(message);
+        notificationLabel.setVisible(true);
+        System.out.println(message); // Mensaje en la terminal
+
+        // Hacer que la notificación desaparezca después de 2 segundos
+        Timer timer = new Timer(2000, e -> notificationLabel.setVisible(false));
+        timer.setRepeats(false);
+        timer.start();
     }
     private void agregarPopupMenu() {
 
@@ -58,6 +104,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         JMenuItem agregarComentario = new JMenuItem("Agregar Comentario");
 
         agregarComentario.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
 
                 Point mousePosition = panelDiagrama.getMousePosition();
@@ -127,6 +174,7 @@ public class panel_pricipal extends javax.swing.JFrame {
 
         // Detectar cuando se presiona el mouse en el JLabel
         label.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 puntoInicial[0] = e.getPoint(); // Guardar la posición inicial del clic
             }
@@ -197,6 +245,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        notificationLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -206,6 +255,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -214,7 +264,7 @@ public class panel_pricipal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("GENERADOR DE CODIGO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 350, 50));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 350, 50));
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("NombreProyecto");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Diagramas");
@@ -239,7 +289,7 @@ public class panel_pricipal extends javax.swing.JFrame {
 
         panelCodigo.add(jScrollPane2);
 
-        getContentPane().add(panelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 270, 360));
+        getContentPane().add(panelCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 270, 360));
         getContentPane().add(panelDiagrama, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 390, 450));
 
         jButton1.setText("IDENTIFICAR");
@@ -248,7 +298,7 @@ public class panel_pricipal extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 440, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
 
         jButton2.setText("SALIR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -256,7 +306,7 @@ public class panel_pricipal extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 440, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 470, -1, -1));
 
         jButton3.setText("GENERAR TXT");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -266,10 +316,14 @@ public class panel_pricipal extends javax.swing.JFrame {
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
 
+        notificationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(notificationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, 240, 50));
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/Fondo3.1.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 530));
 
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/file.png"))); // NOI18N
         jMenu1.setText("File");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,6 +377,15 @@ public class panel_pricipal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/c++.png"))); // NOI18N
+        jMenuItem6.setText("C++");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
@@ -530,6 +593,19 @@ public class panel_pricipal extends javax.swing.JFrame {
             panelCodigo.revalidate();
             panelCodigo.repaint();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas confirmar los cambios?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+
+            System.out.println("Cambios guardados.");
+        } else {
+
+            System.out.println("Acción cancelada.");
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
     // Método para actualizar el nombre del proyecto en el JTree
     public void actualizarNombreProyecto(String nombreProyecto) {
         DefaultTreeModel model = (DefaultTreeModel) jTree1.getModel();
@@ -597,10 +673,12 @@ public class panel_pricipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTree jTree1;
+    private javax.swing.JLabel notificationLabel;
     private javax.swing.JPanel panelCodigo;
     private javax.swing.JPanel panelDiagrama;
     // End of variables declaration//GEN-END:variables
